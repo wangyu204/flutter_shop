@@ -9,7 +9,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       child: MaterialApp(
-        title: '王喻商城',
+        title: 'ewell商城',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           primaryColor: Colors.pink,
