@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../service/service_method.dart';
 
@@ -28,6 +29,9 @@ class _HomePageState extends State<HomePage> {
             String adPicture =
                 data['data']['advertesPicture']['PICTURE_ADDRESS'];
 
+            String leaderImage = data['data']['shopInfo']['leaderImage'];
+            String leaderPhone = data['data']['shopInfo']['leaderPhone'];
+
             return Column(
               children: <Widget>[
                 SwiperDiy(
@@ -38,6 +42,10 @@ class _HomePageState extends State<HomePage> {
                 ),
                 AdBannder(
                   adPicture: adPicture,
+                ),
+                LeaderPhone(
+                  leaderImage: leaderImage,
+                  leaderPhone: leaderPhone,
                 ),
               ],
             );
@@ -62,9 +70,9 @@ class SwiperDiy extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('设备的像素密度：${ScreenUtil.pixelRatio}');
-    print('设备的高：${ScreenUtil.screenHeight}');
-    print('设备的宽：${ScreenUtil.screenWidth}');
+//    print('设备的像素密度：${ScreenUtil.pixelRatio}');
+//    print('设备的高：${ScreenUtil.screenHeight}');
+//    print('设备的宽：${ScreenUtil.screenWidth}');
 
     return Container(
       height: ScreenUtil().setHeight(333),
@@ -138,5 +146,31 @@ class AdBannder extends StatelessWidget {
     return Container(
       child: Image.network(adPicture),
     );
+  }
+}
+
+//拨打店长电话模块
+class LeaderPhone extends StatelessWidget {
+  final String leaderImage; //店长图片
+  final String leaderPhone; //店长电话
+  LeaderPhone({Key key, this.leaderImage, this.leaderPhone}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: InkWell(
+        onTap: _launchURL,
+        child: Image.network(leaderImage),
+      ),
+    );
+  }
+
+  void _launchURL() async {
+    String url = 'tel:' + leaderPhone;
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
   }
 }
