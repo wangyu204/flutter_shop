@@ -26,28 +26,37 @@ class _HomePageState extends State<HomePage> {
             var data = json.decode(snapshot.data.toString());
             List<Map> swiperDataList = (data['data']['slides'] as List).cast();
             List<Map> navigatorList = (data['data']['category'] as List).cast();
+
             String adPicture =
                 data['data']['advertesPicture']['PICTURE_ADDRESS'];
 
             String leaderImage = data['data']['shopInfo']['leaderImage'];
             String leaderPhone = data['data']['shopInfo']['leaderPhone'];
 
-            return Column(
-              children: <Widget>[
-                SwiperDiy(
-                  swiperDataList: swiperDataList,
-                ),
-                TopNavigator(
-                  navigatorList: navigatorList,
-                ),
-                AdBannder(
-                  adPicture: adPicture,
-                ),
-                LeaderPhone(
-                  leaderImage: leaderImage,
-                  leaderPhone: leaderPhone,
-                ),
-              ],
+            List<Map> recommendList =
+                (data['data']['recommend'] as List).cast();
+
+            return SingleChildScrollView(
+              child: Column(
+                children: <Widget>[
+                  SwiperDiy(
+                    swiperDataList: swiperDataList,
+                  ),
+                  TopNavigator(
+                    navigatorList: navigatorList,
+                  ),
+                  AdBannder(
+                    adPicture: adPicture,
+                  ),
+                  LeaderPhone(
+                    leaderImage: leaderImage,
+                    leaderPhone: leaderPhone,
+                  ),
+                  Recommend(
+                    recommentList: recommendList,
+                  ),
+                ],
+              ),
             );
           } else {
             return Center(
@@ -172,5 +181,93 @@ class LeaderPhone extends StatelessWidget {
     } else {
       throw 'Could not launch $url';
     }
+  }
+}
+
+//商品推荐
+class Recommend extends StatelessWidget {
+  final List recommentList;
+
+  Recommend({Key key, this.recommentList}) : super(key: key);
+
+  //标题部分
+  Widget _titleWidget() {
+    return Container(
+      alignment: Alignment.centerLeft,
+      padding: EdgeInsets.fromLTRB(10.0, 2.0, 0, 5.0),
+      decoration: BoxDecoration(
+          color: Colors.white,
+          border: Border(
+            bottom: BorderSide(
+              width: 0.5,
+              color: Colors.black12,
+            ),
+          )),
+      child: Text(
+        '商品推荐',
+        style: TextStyle(color: Colors.pink),
+      ),
+    );
+  }
+
+  //商品单独项
+  Widget _item(index) {
+    return InkWell(
+      onTap: () {},
+      child: Container(
+        height: ScreenUtil().setHeight(330),
+        width: ScreenUtil().setWidth(250),
+        padding: EdgeInsets.all(8.0),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          border: Border(
+              left: BorderSide(
+            width: 0.5,
+            color: Colors.black12,
+          )),
+        ),
+        child: Column(
+          children: <Widget>[
+            Image.network(recommentList[index]['image']),
+            Text('￥${recommentList[index]['mallPrice']}'),
+            Text(
+              '￥${recommentList[index]['price']}',
+              style: TextStyle(
+                decoration: TextDecoration.lineThrough,
+                color: Colors.grey,
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
+  //横向列表
+  Widget _recommendList() {
+    return Container(
+      height: ScreenUtil().setHeight(330.0),
+      child: ListView.builder(
+        scrollDirection: Axis.horizontal,
+        itemCount: recommentList.length,
+        itemBuilder: (context, index) {
+          return _item(index);
+        },
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: ScreenUtil().setHeight(330.0 + 50),
+      margin: EdgeInsets.only(top: 10.0),
+      child: Column(
+        children: <Widget>[
+          _titleWidget(),
+          _recommendList(),
+        ],
+      ),
+    );
   }
 }
