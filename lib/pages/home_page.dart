@@ -25,12 +25,16 @@ class _HomePageState extends State<HomePage>
 
   @override
   Widget build(BuildContext context) {
+    var formData = {
+      'lon': '115.02932',
+      'lat': '35.76189',
+    };
     return Scaffold(
       appBar: AppBar(
         title: Text('百姓生活+'),
       ),
       body: FutureBuilder(
-        future: getHomePageContent(),
+        future: request('homePageContent', formData),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             var data = json.decode(snapshot.data.toString());
@@ -91,6 +95,7 @@ class _HomePageState extends State<HomePage>
                   FloorContent(
                     floorGoodsList: floor3,
                   ),
+                  HotGoods(),
                 ],
               ),
             );
@@ -373,6 +378,29 @@ class FloorContent extends StatelessWidget {
         },
         child: Image.network(goods['image']),
       ),
+    );
+  }
+}
+
+//火爆专区类
+class HotGoods extends StatefulWidget {
+  @override
+  _HotGoodsState createState() => _HotGoodsState();
+}
+
+class _HotGoodsState extends State<HotGoods> {
+  @override
+  void initState() {
+    super.initState();
+    request('hotGoods', 1).then((val) {
+      print('火爆商品' + val);
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Text('wangyu'),
     );
   }
 }
