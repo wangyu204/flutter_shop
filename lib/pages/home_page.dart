@@ -14,12 +14,16 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage>
     with AutomaticKeepAliveClientMixin {
+  int page = 1;
+  List<Map> hotGoodsList = [];
+
   @override
   bool get wantKeepAlive => true;
 
   @override
   void initState() {
     super.initState();
+    _getHotGoods();
     print('1111111');
   }
 
@@ -38,7 +42,14 @@ class _HomePageState extends State<HomePage>
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             var data = json.decode(snapshot.data.toString());
-            List<Map> swiperDataList = (data['data']['slides'] as List).cast();
+//            print('wy=data $data');
+
+            List<Map> swiperDataList;
+            if (data['data']['slides'] != null) {
+              swiperDataList = (data['data']['slides'] as List).cast();
+            } else {
+              swiperDataList = [];
+            }
             List<Map> navigatorList = (data['data']['category'] as List).cast();
 
             String adPicture =
@@ -95,7 +106,7 @@ class _HomePageState extends State<HomePage>
                   FloorContent(
                     floorGoodsList: floor3,
                   ),
-                  HotGoods(),
+                  _hotGoods(),
                 ],
               ),
             );
@@ -108,6 +119,86 @@ class _HomePageState extends State<HomePage>
           }
         },
       ),
+    );
+  }
+
+  void _getHotGoods() {
+    var formData = {'page': page};
+    request('hotGoods', formData: formData).then((val) {
+      var data = json.decode(val.toString());
+      List<Map> newGoodsList = (data['data'] as List).cast();
+      setState(() {
+        hotGoodsList.addAll(newGoodsList);
+        page++;
+      });
+    });
+  }
+
+  //变量显示组件
+  Widget _hotTitle = Container(
+    margin: EdgeInsets.only(top: 10.0),
+    alignment: Alignment.center,
+    color: Colors.transparent,
+    child: Text('火爆专区'),
+    padding: EdgeInsets.all(5.0),
+  );
+
+  //方法形式组件
+  Widget _wrapList() {
+    if (hotGoodsList.length != 0) {
+      List<Widget> listWidget = hotGoodsList.map((val) {
+        return InkWell(
+          onTap: () {},
+          child: Container(
+            width: ScreenUtil().setWidth(372),
+            color: Colors.white,
+            padding: EdgeInsets.all(5.0),
+            margin: EdgeInsets.only(bottom: 3.0),
+            child: Column(
+              children: <Widget>[
+                Image.network(
+                  val['image'],
+                  width: ScreenUtil().setWidth(370),
+                ),
+                Text(
+                  val['name'],
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                      color: Colors.pink, fontSize: ScreenUtil().setSp(26)),
+                ),
+                Row(
+                  children: <Widget>[
+                    Text('￥${val['mallPrice']}'),
+                    Text(
+                      '￥${val['price']}',
+                      style: TextStyle(
+                          color: Colors.black26,
+                          decoration: TextDecoration.lineThrough),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        );
+      }).toList();
+
+      return Wrap(
+        spacing: 2,
+        children: listWidget,
+      );
+    } else {
+      return Text('');
+    }
+  }
+
+  Widget _hotGoods() {
+    return Column(
+      children: <Widget>[
+        _hotTitle,
+        _wrapList(),
+      ],
     );
   }
 }
@@ -378,29 +469,6 @@ class FloorContent extends StatelessWidget {
         },
         child: Image.network(goods['image']),
       ),
-    );
-  }
-}
-
-//火爆专区类
-class HotGoods extends StatefulWidget {
-  @override
-  _HotGoodsState createState() => _HotGoodsState();
-}
-
-class _HotGoodsState extends State<HotGoods> {
-  @override
-  void initState() {
-    super.initState();
-    request('hotGoods', formData: 1).then((val) {
-      print('火爆商品' + val);
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: Text('wangyu'),
     );
   }
 }
