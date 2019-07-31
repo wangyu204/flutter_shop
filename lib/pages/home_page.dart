@@ -34,7 +34,7 @@ class _HomePageState extends State<HomePage>
         title: Text('百姓生活+'),
       ),
       body: FutureBuilder(
-        future: request('homePageContent', formData),
+        future: request('homePageContent', formData: formData),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             var data = json.decode(snapshot.data.toString());
@@ -392,7 +392,7 @@ class _HotGoodsState extends State<HotGoods> {
   @override
   void initState() {
     super.initState();
-    request('hotGoods', 1).then((val) {
+    request('hotGoods', formData: 1).then((val) {
       print('火爆商品' + val);
     });
   }

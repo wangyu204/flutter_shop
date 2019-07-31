@@ -50,7 +50,8 @@ Future getHotGoods() async {
   }
 }
 
-Future request(url, formData) async {
+//可选参数
+Future request(url, {formData}) async {
   try {
     print('开始获取数据.....url=' + url);
     Response response;
