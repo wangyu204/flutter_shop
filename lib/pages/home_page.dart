@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:flutter_easyrefresh/easy_refresh.dart';
 
 import '../service/service_method.dart';
 
@@ -17,13 +18,16 @@ class _HomePageState extends State<HomePage>
   int page = 1;
   List<Map> hotGoodsList = [];
 
+  GlobalKey<RefreshFooterState> _footerKey =
+      new GlobalKey<RefreshFooterState>();
+
   @override
   bool get wantKeepAlive => true;
 
   @override
   void initState() {
     super.initState();
-    _getHotGoods();
+//    _getHotGoods();
     print('1111111');
   }
 
@@ -69,8 +73,18 @@ class _HomePageState extends State<HomePage>
             List<Map> floor2 = (data['data']['floor2'] as List).cast();
             List<Map> floor3 = (data['data']['floor3'] as List).cast();
 
-            return SingleChildScrollView(
-              child: Column(
+            return EasyRefresh(
+              refreshFooter: ClassicsFooter(
+                key: _footerKey,
+                bgColor: Colors.white,
+                textColor: Colors.pink,
+                moreInfoColor: Colors.pink,
+                showMore: true,
+                noMoreText: '',
+                moreInfo: '加载中',
+                loadReadyText: '上拉加载',
+              ),
+              child: ListView(
                 children: <Widget>[
                   SwiperDiy(
                     swiperDataList: swiperDataList,
@@ -109,6 +123,18 @@ class _HomePageState extends State<HomePage>
                   _hotGoods(),
                 ],
               ),
+              loadMore: () async {
+                print('开始加载更多.......');
+                var formData = {'page': page};
+                await request('hotGoods', formData: formData).then((val) {
+                  var data = json.decode(val.toString());
+                  List<Map> newGoodsList = (data['data'] as List).cast();
+                  setState(() {
+                    hotGoodsList.addAll(newGoodsList);
+                    page++;
+                  });
+                });
+              },
             );
           } else {
             return Center(
@@ -120,18 +146,6 @@ class _HomePageState extends State<HomePage>
         },
       ),
     );
-  }
-
-  void _getHotGoods() {
-    var formData = {'page': page};
-    request('hotGoods', formData: formData).then((val) {
-      var data = json.decode(val.toString());
-      List<Map> newGoodsList = (data['data'] as List).cast();
-      setState(() {
-        hotGoodsList.addAll(newGoodsList);
-        page++;
-      });
-    });
   }
 
   //变量显示组件
