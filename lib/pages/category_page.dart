@@ -25,8 +25,21 @@ class _CategoryPageState extends State<CategoryPage> {
   void _getCategory() async {
     await request('getCategory').then((val) {
       var data = json.decode(val.toString());
-      CategoryBigListModel list = CategoryBigListModel.fromJosn(data['data']);
+      CategoryModel list = CategoryModel.fromJson(data);
       list.data.forEach((item) => print(item.mallCategoryName));
     });
+  }
+}
+
+//左侧大类导航
+class LeftCategoryNav extends StatefulWidget {
+  @override
+  _LeftCategoryNavState createState() => _LeftCategoryNavState();
+}
+
+class _LeftCategoryNavState extends State<LeftCategoryNav> {
+  @override
+  Widget build(BuildContext context) {
+    return Container();
   }
 }
