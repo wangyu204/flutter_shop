@@ -53,7 +53,7 @@ Future getHotGoods() async {
 //可选参数
 Future request(url, {formData}) async {
   try {
-    print('开始获取数据.....url=' + url);
+//    print('开始获取数据.....url=' + url);
     Response response;
     Dio dio = new Dio();
     dio.options.contentType =
@@ -66,7 +66,7 @@ Future request(url, {formData}) async {
     }
 
     if (response.statusCode == 200) {
-      print('wy1=data' + response.data);
+      print('wy1_url=' + url + '=data' + response.data);
       return response.data;
     } else {
       throw Exception('后端接口出现异常。');
