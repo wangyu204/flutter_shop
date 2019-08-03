@@ -4,20 +4,43 @@ import '../provide/details_infoP.dart';
 
 class DetailsPage extends StatelessWidget {
   final String goodsId;
+
   DetailsPage(this.goodsId);
 
   @override
   Widget build(BuildContext context) {
-    _getBackInfo(context);
-    return Container(
-      child: Center(
-        child: Text('商品ID,$goodsId'),
+    return Scaffold(
+      appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back_ios),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+        title: Text('detail page'),
+      ),
+      body: FutureBuilder(
+        future: _getBackInfo(context),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            return Container(
+              child: Column(
+                children: <Widget>[
+                  Text('shopId:$goodsId'),
+                ],
+              ),
+            );
+          } else {
+            return Text('loading');
+          }
+        },
       ),
     );
   }
 
-  void _getBackInfo(BuildContext context) async {
+  Future _getBackInfo(BuildContext context) async {
     await Provide.value<DetailsInfoProvide>(context).getGoodsInfo(goodsId);
-    print('加载完成.....');
+
+    return 'finish load';
   }
 }
