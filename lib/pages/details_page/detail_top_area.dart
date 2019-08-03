@@ -56,7 +56,7 @@ class DetailTopArea extends StatelessWidget {
       padding: EdgeInsets.only(left: 15),
       margin: EdgeInsets.only(top: 8.0),
       child: Text(
-        '编号：${num}',
+        '编号：$num',
         style: TextStyle(
           color: Colors.black12,
         ),
