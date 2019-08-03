@@ -53,7 +53,7 @@ Future getHotGoods() async {
 //可选参数
 Future request(url, {formData}) async {
   try {
-//    print('开始获取数据.....url=' + url);
+//    print('开始获取数据.....url=' + url + 'formData=' + formData);
     Response response;
     Dio dio = new Dio();
     dio.options.contentType =
@@ -62,6 +62,7 @@ Future request(url, {formData}) async {
     if (formData == null) {
       response = await dio.post(servicePath[url]);
     } else {
+      print('开始获取数据.....url=' + url + 'formData=$formData');
       response = await dio.post(servicePath[url], data: formData);
     }
 

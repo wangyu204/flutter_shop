@@ -9,7 +9,7 @@ class ChildCategoryP with ChangeNotifier {
   int page = 1; //列表也页数
   String noMoreText = ''; //显示没有数据的文字
 
-  getChildCategory(List<BxMallSubDto> list, String categoryId) {
+  getChildCategory(List<BxMallSubDto> list, String id) {
     //添加一个默认全部
     BxMallSubDto all = BxMallSubDto();
     all.mallSubId = '';
@@ -20,7 +20,7 @@ class ChildCategoryP with ChangeNotifier {
     childCategoryList.addAll(list);
 
     childIndex = 0;
-    categoryId = categoryId;
+    categoryId = id;
     page = 1;
     noMoreText = '';
 
@@ -28,9 +28,9 @@ class ChildCategoryP with ChangeNotifier {
   }
 
 //改变子类索引
-  changeChildIndex(index, String subId) {
+  changeChildIndex(index, String id) {
     childIndex = index;
-    subId = subId;
+    subId = id;
     page = 1;
     noMoreText = '';
 
