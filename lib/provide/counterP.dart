@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class Counter with ChangeNotifier {
+class CounterP with ChangeNotifier {
   int value = 0;
 
   increment() {

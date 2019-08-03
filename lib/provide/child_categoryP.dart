@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import '../model/category.dart';
+import '../model/categoryM.dart';
 
-class ChildCategory with ChangeNotifier {
+class ChildCategoryP with ChangeNotifier {
   List<BxMallSubDto> childCategoryList = [];
 
   getChildCategory(List<BxMallSubDto> list) {
