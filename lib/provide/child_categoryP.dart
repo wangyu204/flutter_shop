@@ -3,6 +3,7 @@ import '../model/categoryM.dart';
 
 class ChildCategoryP with ChangeNotifier {
   List<BxMallSubDto> childCategoryList = [];
+  int childIndex = 0; //子类高亮所以
 
   getChildCategory(List<BxMallSubDto> list) {
     //添加一个默认全部
@@ -13,6 +14,15 @@ class ChildCategoryP with ChangeNotifier {
     all.comments = 'null';
     childCategoryList = [all];
     childCategoryList.addAll(list);
+
+    childIndex = 0;
+
+    notifyListeners();
+  }
+
+//改变子类索引
+  changeChildIndex(index) {
+    childIndex = index;
 
     notifyListeners();
   }
