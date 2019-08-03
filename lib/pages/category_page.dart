@@ -88,8 +88,9 @@ class _LeftCategoryNavState extends State<LeftCategoryNav> {
         });
 
         var childList = list[index].bxMallSubDto;
-        Provide.value<ChildCategoryP>(context).getChildCategory(childList);
         var categoryId = list[index].mallCategoryId;
+        Provide.value<ChildCategoryP>(context)
+            .getChildCategory(childList, categoryId);
         _getGoodsList(categoryId: categoryId);
       },
       child: Container(
@@ -119,19 +120,19 @@ class _LeftCategoryNavState extends State<LeftCategoryNav> {
       });
 
       Provide.value<ChildCategoryP>(context)
-          .getChildCategory(list[0].bxMallSubDto);
+          .getChildCategory(list[0].bxMallSubDto, list[0].mallCategoryId);
 
 //      list.data.forEach((item) => print(item.mallCategoryName));
     });
   }
 
-  void _getGoodsList({String categoryId}) async {
+  void _getGoodsList({String categoryId}) {
     var fromData = {
       'categoryId': categoryId == null ? '4' : categoryId,
       'categorySubId': "",
       'page': 1
     };
-    await request('getMallGoods', formData: fromData).then((val) {
+    request('getMallGoods', formData: fromData).then((val) {
       var data = json.decode(val.toString());
       CategoryGoodsListModel goodList = CategoryGoodsListModel.fromJson(data);
       Provide.value<CategoryGoodsListP>(context).getGoodsList(goodList.data);
@@ -180,6 +181,7 @@ class _RightCategoryNavState extends State<RightCategoryNav> {
     return InkWell(
       onTap: () {
         Provide.value<ChildCategoryP>(context).changeChildIndex(index);
+        _getGoodsList(item.mallSubId);
       },
       child: Container(
         padding: EdgeInsets.fromLTRB(5.0, 10.0, 5.0, 10.0),
@@ -192,6 +194,19 @@ class _RightCategoryNavState extends State<RightCategoryNav> {
         ),
       ),
     );
+  }
+
+  void _getGoodsList(String categorySubId) {
+    var fromData = {
+      'categoryId': Provide.value<ChildCategoryP>(context).categoryId,
+      'categorySubId': categorySubId,
+      'page': 1
+    };
+    request('getMallGoods', formData: fromData).then((val) {
+      var data = json.decode(val.toString());
+      CategoryGoodsListModel goodList = CategoryGoodsListModel.fromJson(data);
+      Provide.value<CategoryGoodsListP>(context).getGoodsList(goodList.data);
+    });
   }
 }
 
