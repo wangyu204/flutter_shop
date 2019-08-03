@@ -5,6 +5,9 @@ import './pages/index_page.dart';
 import './provide/counterP.dart';
 import './provide/child_categoryP.dart';
 import './provide/category_goods_listP.dart';
+import 'package:fluro/fluro.dart';
+import './routers/application.dart';
+import './routers/routes.dart';
 
 void main() {
   var counter = CounterP();
@@ -24,9 +27,15 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    //1.fluro初始化
+    final router = Router();
+    Routes.configureRoutes(router);
+    Application.router = router;
+
     return Container(
       child: MaterialApp(
         title: 'ewell商城',
+        onGenerateRoute: Application.router.generator,
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           primaryColor: Colors.pink,

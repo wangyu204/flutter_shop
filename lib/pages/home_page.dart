@@ -7,6 +7,7 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 
 import '../service/service_method.dart';
+import '../routers/application.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -28,7 +29,7 @@ class _HomePageState extends State<HomePage>
   void initState() {
     super.initState();
 //    _getHotGoods();
-    print('1111111');
+//    print('1111111');
   }
 
   @override
@@ -162,7 +163,10 @@ class _HomePageState extends State<HomePage>
     if (hotGoodsList.length != 0) {
       List<Widget> listWidget = hotGoodsList.map((val) {
         return InkWell(
-          onTap: () {},
+          onTap: () {
+            Application.router
+                .navigateTo(context, '/detail?id=${val['goodsId']}');
+          },
           child: Container(
             width: ScreenUtil().setWidth(372),
             color: Colors.white,
