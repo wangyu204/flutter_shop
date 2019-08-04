@@ -54,7 +54,7 @@ class DetailsBottom extends StatelessWidget {
                         borderRadius: BorderRadius.circular(12),
                       ),
                       child: Text(
-                        '${goodsCount}',
+                        '$goodsCount',
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: ScreenUtil().setSp(22),
