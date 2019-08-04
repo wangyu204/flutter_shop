@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provide/provide.dart';
 import '../provide/cartP.dart';
 import '../model/cartInfoM.dart';
+import './cart_page/cart_item.dart';
 
 class CartPage extends StatelessWidget {
   @override
@@ -23,7 +24,7 @@ class CartPage extends StatelessWidget {
               itemCount: cartList.length,
               itemBuilder: (context, index) {
                 return ListTile(
-                  title: Text(cartList[index].goodsName),
+                  title: CartItem(cartList[index]),
                 );
               },
             );
