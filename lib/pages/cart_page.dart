@@ -23,11 +23,16 @@ class CartPage extends StatelessWidget {
 
             return Stack(
               children: <Widget>[
-                ListView.builder(
-                  itemCount: cartList.length,
-                  itemBuilder: (context, index) {
-                    return ListTile(
-                      title: CartItem(cartList[index]),
+                Provide<CartProvide>(
+                  builder: (context, child, childCategory) {
+                    cartList = Provide.value<CartProvide>(context).cartList;
+                    return ListView.builder(
+                      itemCount: cartList.length,
+                      itemBuilder: (context, index) {
+                        return ListTile(
+                          title: CartItem(cartList[index]),
+                        );
+                      },
                     );
                   },
                 ),
