@@ -3,6 +3,7 @@ import 'package:provide/provide.dart';
 import '../provide/cartP.dart';
 import '../model/cartInfoM.dart';
 import './cart_page/cart_item.dart';
+import './cart_page/cart_bottom.dart';
 
 class CartPage extends StatelessWidget {
   @override
@@ -20,13 +21,22 @@ class CartPage extends StatelessWidget {
             List<CartInfoModel> cartList =
                 Provide.value<CartProvide>(context).cartList;
 
-            return ListView.builder(
-              itemCount: cartList.length,
-              itemBuilder: (context, index) {
-                return ListTile(
-                  title: CartItem(cartList[index]),
-                );
-              },
+            return Stack(
+              children: <Widget>[
+                ListView.builder(
+                  itemCount: cartList.length,
+                  itemBuilder: (context, index) {
+                    return ListTile(
+                      title: CartItem(cartList[index]),
+                    );
+                  },
+                ),
+                Positioned(
+                  bottom: 0,
+                  left: 0,
+                  child: CartBottom(),
+                ),
+              ],
             );
           } else {
             return Text('loading');
