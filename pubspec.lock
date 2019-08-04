@@ -79,12 +79,10 @@ packages:
   flutter_html:
     dependency: "direct main"
     description:
-      path: "."
-      ref: HEAD
-      resolved-ref: "38a7739933a0734cc6dc5bf2936b6e78981a8497"
-      url: "https://github.com/Sub6Resources/flutter_html.git"
-    source: git
-    version: "0.10.4"
+      name: flutter_html
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.9.9"
   flutter_page_indicator:
     dependency: transitive
     description:
@@ -167,6 +165,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.3"
+  shared_preferences:
+    dependency: "direct main"
+    description:
+      name: shared_preferences
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.5.3+4"
   sky_engine:
     dependency: transitive
     description: flutter
@@ -179,6 +184,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.5.5"
+  sqflite:
+    dependency: "direct main"
+    description:
+      name: sqflite
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.1.6+3"
   stack_trace:
     dependency: transitive
     description:
@@ -200,6 +212,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.4"
+  synchronized:
+    dependency: transitive
+    description:
+      name: synchronized
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.1.0+1"
   term_glyph:
     dependency: transitive
     description:
