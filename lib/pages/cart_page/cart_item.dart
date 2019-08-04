@@ -10,7 +10,7 @@ class CartItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.fromLTRB(5.0, 2.0, 5.0, 2.0),
+      margin: EdgeInsets.fromLTRB(0, 2.0, 0, 2.0),
       padding: EdgeInsets.fromLTRB(5.0, 10.0, 5.0, 10.0),
       decoration: BoxDecoration(
           color: Colors.white,
@@ -57,7 +57,7 @@ class CartItem extends StatelessWidget {
   //商品名称
   Widget _cartGoodsName() {
     return Container(
-      width: ScreenUtil().setWidth(300.0),
+      width: ScreenUtil().setWidth(250.0),
       padding: EdgeInsets.all(10),
       alignment: Alignment.topLeft,
       child: Column(
