@@ -30,7 +30,10 @@ dependencies:
   flutter_easyrefresh: ^1.2.7
   provide: ^1.0.2
   fluttertoast: ^3.1.0
-  fluro: "^1.5.1"
+  fluro: ^1.5.1
+  #  flutter_html: ^0.10.4
+  flutter_html:
+    git: https://github.com/Sub6Resources/flutter_html.git
 
 dev_dependencies:
   flutter_test:
