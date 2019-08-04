@@ -33,6 +33,7 @@ class CartProvide with ChangeNotifier {
         'count': count,
         'price': price,
         'images': images,
+        'isCheck': true,
       };
 
       tempList.add(newGoods);
@@ -40,8 +41,8 @@ class CartProvide with ChangeNotifier {
     }
 
     cartString = json.encode(tempList).toString();
-    print('字符串》》》》》》》》$cartString');
-    print('model》》》》》》》》$cartList');
+//    print('字符串》》》》》》》》$cartString');
+//    print('model》》》》》》》》$cartList');
 
     prefs.setString('cartInfo', cartString);
 
