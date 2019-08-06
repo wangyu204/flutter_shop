@@ -56,26 +56,32 @@ class _LeftCategoryNavState extends State<LeftCategoryNav> {
   void initState() {
     super.initState();
     _getCategory();
-    _getGoodsList();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: ScreenUtil().setWidth(180),
-      decoration: BoxDecoration(
-        border: Border(
-            right: BorderSide(
-          width: 1,
-          color: Colors.black12,
-        )),
-      ),
-      child: ListView.builder(
-        itemCount: list.length,
-        itemBuilder: (context, index) {
-          return _leftInkWell(index);
-        },
-      ),
+    return Provide<ChildCategoryP>(
+      builder: (context, child, val) {
+        _getGoodsList();
+        listIndex = val.categoryIndex;
+
+        return Container(
+          width: ScreenUtil().setWidth(180),
+          decoration: BoxDecoration(
+            border: Border(
+                right: BorderSide(
+              width: 1,
+              color: Colors.black12,
+            )),
+          ),
+          child: ListView.builder(
+            itemCount: list.length,
+            itemBuilder: (context, index) {
+              return _leftInkWell(index);
+            },
+          ),
+        );
+      },
     );
   }
 
@@ -85,12 +91,10 @@ class _LeftCategoryNavState extends State<LeftCategoryNav> {
 
     return InkWell(
       onTap: () {
-        setState(() {
-          listIndex = index;
-        });
-
         var childList = list[index].bxMallSubDto;
         var categoryId = list[index].mallCategoryId;
+        Provide.value<ChildCategoryP>(context)
+            .changeCategory(categoryId, index);
         Provide.value<ChildCategoryP>(context)
             .getChildCategory(childList, categoryId);
         _getGoodsList(categoryId: categoryId);

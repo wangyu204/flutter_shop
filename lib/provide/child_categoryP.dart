@@ -3,11 +3,20 @@ import '../model/categoryM.dart';
 
 class ChildCategoryP with ChangeNotifier {
   List<BxMallSubDto> childCategoryList = [];
-  int childIndex = 0; //子类高亮所以
+  int childIndex = 0; //
+  int categoryIndex = 0; //大类索引
   String categoryId = '4'; //大类的id(默认是白酒)
   String subId = ''; //小类id
   int page = 1; //列表也页数
   String noMoreText = ''; //显示没有数据的文字
+
+  //首页点击类别是更改类别
+  changeCategory(String id, int index) {
+    categoryId = id;
+    categoryIndex = index;
+    subId = '';
+    notifyListeners();
+  }
 
   getChildCategory(List<BxMallSubDto> list, String id) {
     //添加一个默认全部

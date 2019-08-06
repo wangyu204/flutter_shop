@@ -9,6 +9,11 @@ import 'package:flutter_easyrefresh/easy_refresh.dart';
 import '../service/service_method.dart';
 import '../routers/application.dart';
 
+import '../model/categoryM.dart';
+import 'package:provide/provide.dart';
+import '../provide/child_categoryP.dart';
+import '../provide/currentIndexP.dart';
+
 class HomePage extends StatefulWidget {
   @override
   _HomePageState createState() => _HomePageState();
@@ -265,10 +270,10 @@ class TopNavigator extends StatelessWidget {
 
   TopNavigator({Key key, this.navigatorList}) : super(key: key);
 
-  Widget _gridViewItemUI(BuildContext context, item) {
+  Widget _gridViewItemUI(BuildContext context, item, index) {
     return InkWell(
       onTap: () {
-        print('点击了导航');
+        _goCategory(context, index, item['mallCategoryId']);
       },
       child: Column(
         children: <Widget>[
@@ -282,8 +287,22 @@ class TopNavigator extends StatelessWidget {
     );
   }
 
+  void _goCategory(BuildContext context, int index, String categoryId) async {
+    await request('getCategory').then((val) {
+      var data = json.decode(val.toString());
+      CategoryModel category = CategoryModel.fromJson(data);
+      List<CategoryBigModel> list = category.data;
+
+      Provide.value<ChildCategoryP>(context).changeCategory(categoryId, index);
+      Provide.value<ChildCategoryP>(context)
+          .getChildCategory(list[index].bxMallSubDto, categoryId);
+      Provide.value<CurrentIndexProvide>(context).changeIndex(1);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    var tempIndex = -1;
     if (this.navigatorList.length > 10) {
       this.navigatorList.removeRange(10, this.navigatorList.length);
     }
@@ -296,7 +315,8 @@ class TopNavigator extends StatelessWidget {
         crossAxisCount: 5,
         padding: EdgeInsets.all(5.0),
         children: navigatorList.map((item) {
-          return _gridViewItemUI(context, item);
+          tempIndex++;
+          return _gridViewItemUI(context, item, tempIndex);
         }).toList(),
       ),
     );
