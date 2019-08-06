@@ -64,7 +64,7 @@ class _LeftCategoryNavState extends State<LeftCategoryNav> {
   Widget build(BuildContext context) {
     return Provide<ChildCategoryP>(
       builder: (context, child, val) {
-        _getGoodsList();
+        _getGoodsList(context);
         listIndex = val.categoryIndex;
 
         return Container(
@@ -99,7 +99,7 @@ class _LeftCategoryNavState extends State<LeftCategoryNav> {
             .changeCategory(categoryId, index);
         Provide.value<ChildCategoryP>(context)
             .getChildCategory(childList, categoryId);
-        _getGoodsList(categoryId: categoryId);
+        _getGoodsList(context, categoryId: categoryId);
       },
       child: Container(
         height: ScreenUtil().setHeight(100),
@@ -134,9 +134,11 @@ class _LeftCategoryNavState extends State<LeftCategoryNav> {
     });
   }
 
-  void _getGoodsList({String categoryId}) {
+  void _getGoodsList(BuildContext context, {String categoryId}) {
     var fromData = {
-      'categoryId': categoryId == null ? '4' : categoryId,
+      'categoryId': categoryId == null
+          ? Provide.value<ChildCategoryP>(context).categoryId
+          : categoryId,
       'categorySubId': "",
       'page': 1
     };
@@ -190,7 +192,7 @@ class _RightCategoryNavState extends State<RightCategoryNav> {
       onTap: () {
         Provide.value<ChildCategoryP>(context)
             .changeChildIndex(index, item.mallSubId);
-        _getGoodsList(item.mallSubId);
+        _getGoodsList(context, item.mallSubId);
       },
       child: Container(
         padding: EdgeInsets.fromLTRB(5.0, 10.0, 5.0, 10.0),
@@ -205,7 +207,7 @@ class _RightCategoryNavState extends State<RightCategoryNav> {
     );
   }
 
-  void _getGoodsList(String categorySubId) {
+  void _getGoodsList(BuildContext context, String categorySubId) {
     var fromData = {
       'categoryId': Provide.value<ChildCategoryP>(context).categoryId,
       'categorySubId': categorySubId,
