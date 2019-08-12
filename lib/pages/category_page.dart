@@ -139,7 +139,7 @@ class _LeftCategoryNavState extends State<LeftCategoryNav> {
       'categoryId': categoryId == null
           ? Provide.value<ChildCategoryP>(context).categoryId
           : categoryId,
-      'categorySubId': "",
+      'categorySubId': Provide.value<ChildCategoryP>(context).subId,
       'page': 1
     };
     request('getMallGoods', formData: fromData).then((val) {
