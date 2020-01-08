@@ -28,30 +28,34 @@ class DetailsPage extends StatelessWidget {
         future: _getBackInfo(context),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            return Stack(
-              children: <Widget>[
-                Container(
-                  child: ListView(
-                    children: <Widget>[
-                      DetailTopArea(),
-                      DetailsExplain(),
-                      DetailsTabbar(),
-                      DetailsWeb(),
-                    ],
-                  ),
-                ),
-                Positioned(
-                  bottom: 0,
-                  left: 0,
-                  child: DetailsBottom(),
-                ),
-              ],
-            );
+            return buildStack();
           } else {
             return Text('loading');
           }
         },
       ),
+    );
+  }
+
+  Stack buildStack() {
+    return Stack(
+      children: <Widget>[
+        Container(
+          child: ListView(
+            children: <Widget>[
+              DetailTopArea(),
+              DetailsExplain(),
+              DetailsTabbar(),
+              DetailsWeb(),
+            ],
+          ),
+        ),
+        Positioned(
+          bottom: 0,
+          left: 0,
+          child: DetailsBottom(),
+        ),
+      ],
     );
   }
 
