@@ -31,33 +31,61 @@ class Home extends StatelessWidget {
           textAlign: TextAlign.center,
         ),
       ),
-      body: Center(
-        child: Container(
-          //宽度
-          width: 100,
-          //高度
-          height: 100,
-          // 盒子样式
-          decoration: new BoxDecoration(
-            color: Colors.black,
-            //设置Border属性给容器添加边框
-            border: new Border.all(
-              //为边框添加颜色
-              color: Colors.red,
-              //边框宽度
-              width: 1,
+      body: ListView(
+          children: <Widget>[
+            // 一个有图片和文字组成的简单列表item
+            ListTile(
+              leading: Icon(Icons.text_rotate_vertical),
+              title: Text(''),
+              subtitle: Text(''),
+              // 右边的图标
+              trailing: Icon(Icons.keyboard_arrow_right),
+              onTap: () {
+                //TODO:这里处理点击事件
+              },
+              onLongPress: () {
+                //TODO:这里处理长按事件
+              },
+              selected: true,
             ),
-          ),
-          alignment: Alignment.center,
-          child: Text(
-            '11',
-            style: TextStyle(
-              color: Colors.green,
-              fontWeight: FontWeight.normal,
-              fontSize: 14,
+            // 单选框列表item
+            CheckboxListTile(
+              value: true,
+              onChanged: ((bool) {
+                //TODO:焦点改变的监听事件写在这里：
+              }),
+              title: Text(''),
+              subtitle: Text(''),
+              selected: true,
+              activeColor: Colors.teal,
             ),
-          ),
-        ),
+            // 开关列表item
+            SwitchListTile(
+              value: true,
+              onChanged: ((bool) {
+               //TODO:焦点改变的监听事件写在这里：
+              }),
+              title: Text(''),
+              subtitle: Text(''),
+              //如果subtitle文字过长，将会以三行显示
+              isThreeLine: true,
+              selected: true,
+              activeColor: Colors.teal,
+              //SwitchListTile左边的图标
+              secondary: Icon(Icons.account_circle),
+            ),
+            AboutListTile(
+              icon: Icon(Icons.apps),
+              //公司logo
+              applicationIcon: Image.asset(''),
+              //app名称
+              applicationName: '关于我们',
+              //app版本号
+              applicationVersion: 'V1.0.0',
+              //版权信息
+              applicationLegalese: '版权归XX科技有限公司所有...',
+            ),
+          ],
       ),
     );
   }
