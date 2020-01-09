@@ -4,6 +4,7 @@ void main() {
   runApp(
     MaterialApp(
       title: 'hello',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
@@ -21,9 +22,10 @@ class FirstPage extends StatelessWidget {
       ),
       body: Center(
         child: RaisedButton(
-          onPressed: () {
-            Navigator.push(
+          onPressed: () async {
+            final result = await Navigator.push(
                 context, MaterialPageRoute(builder: (context) => SecondPage()));
+            print('${result}');
           },
           color: Colors.blue,
           child: Text('second'),
@@ -43,7 +45,7 @@ class SecondPage extends StatelessWidget {
       body: Center(
         child: RaisedButton(
           onPressed: () {
-            Navigator.pop(context);
+            Navigator.pop(context, 'wangyu');
           },
           color: Colors.blue,
           child: Text('back'),
