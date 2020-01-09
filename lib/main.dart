@@ -22,35 +22,27 @@ class Home extends StatelessWidget {
           textAlign: TextAlign.center,
         ),
       ),
-      body: Stack(
-        children: <Widget>[
-          Container(
-            width: 375,
-            height: 500,
-            // 盒子样式
-            decoration: new BoxDecoration(
-              color: Colors.white,
-              //设置Border属性给容器添加边框
-              border: new Border.all(
-                //为边框添加颜色
-                color: Colors.white,
-                //边框宽度
-                width: 1,
-              ),
+      body: Card(
+        child: Column(
+          //主轴居中，垂直方向
+          mainAxisAlignment: MainAxisAlignment.start, //最上面
+          //副轴,左对齐，水平方向
+          crossAxisAlignment: CrossAxisAlignment.start, //最左边
+          children: [
+            ListTile(
+              title: Text('1'),
             ),
-            child: Text('wangyu'),
-          ),
-          Positioned(
-            bottom: 0,
-            left: 0,
-            width: 375,
-            child: RaisedButton(
-              onPressed: () {},
-              color: Colors.blue,
-              child: Text('底部'),
+            new Divider(),
+            ListTile(
+              title: Text('2'),
             ),
-          ),
-        ],
+            new Divider(),
+            ListTile(
+              title: Text('3'),
+            ),
+            new Divider(),
+          ],
+        ),
       ),
     );
   }
