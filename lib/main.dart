@@ -27,21 +27,25 @@ class Home extends StatelessWidget {
           textAlign: TextAlign.center,
         ),
       ),
-      body: GridView.count(
-        // 创建几列
-        crossAxisCount: 3,
+      body: GridView(
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          // 创建几列
+          crossAxisCount: 3,
+          // 列之间的间距
+          crossAxisSpacing: 2,
+          // 行之间的间距
+          mainAxisSpacing: 2,
+          // 子孩子的比例
+          childAspectRatio: 0.7,
+        ),
+
         // Axis.horizontal 表示横向滑动，scrollDirection: Axis.vertical 表示纵向滑动
         scrollDirection: Axis.vertical,
-        // 列之间的间距
-        crossAxisSpacing: 2,
-        // 行之间的间距
-        mainAxisSpacing: 2,
         // 默认false 是否根据子孩子的宽高自动包裹item自身
         shrinkWrap: false,
         // true表示数据倒序排列 false表示顺序排列
         reverse: false,
-        // 子孩子的比例
-        childAspectRatio: 0.7,
+
         // 设置子孩子item,这里传入子孩子控件
         children: <Widget>[
           new Image.network(
