@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 void main() {
-
   runApp(
     MaterialApp(
       title: 'hello',
@@ -33,19 +32,31 @@ class Home extends StatelessWidget {
         ),
       ),
       body: Center(
-        child: Text(
-          '1fffsdfsdfsdfsdfsdfdsfsdfsfsfsfsfsdfsafsaf',
-          style: TextStyle(
-            color: Colors.blue,
-            fontWeight: FontWeight.bold,
-            fontSize: 13.0,
+        child: Container(
+          //宽度
+          width: 100,
+          //高度
+          height: 100,
+          // 盒子样式
+          decoration: new BoxDecoration(
+            color: Colors.black,
+            //设置Border属性给容器添加边框
+            border: new Border.all(
+              //为边框添加颜色
+              color: Colors.red,
+              //边框宽度
+              width: 1,
+            ),
           ),
-          textAlign: TextAlign.left,
-          textDirection: TextDirection.ltr,
-          textScaleFactor: 1.0,
-          overflow: TextOverflow.ellipsis,
-          locale: Localizations.localeOf(context),
-          maxLines: 2,
+          alignment: Alignment.center,
+          child: Text(
+            '11',
+            style: TextStyle(
+              color: Colors.green,
+              fontWeight: FontWeight.normal,
+              fontSize: 14,
+            ),
+          ),
         ),
       ),
     );
