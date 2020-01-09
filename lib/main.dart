@@ -22,25 +22,15 @@ class Home extends StatelessWidget {
           textAlign: TextAlign.center,
         ),
       ),
-      body: Row(
+      body: Column(
+        //主轴居中，垂直方向
+        mainAxisAlignment: MainAxisAlignment.start, //最上面
+        //副轴,左对齐，水平方向
+        crossAxisAlignment: CrossAxisAlignment.start, //最左边
         children: [
-          RaisedButton(
-            onPressed: () {},
-            color: Colors.blue,
-            child: Text('button'),
-          ),
-          Expanded(
-            child: RaisedButton(
-              onPressed: () {},
-              color: Colors.red,
-              child: Text('button'),
-            ),
-          ),
-          RaisedButton(
-            onPressed: () {},
-            color: Colors.green,
-            child: Text('button'),
-          ),
+          Text('我是第一行'),
+          Text('我是第一行我是第一行我是第一行我是第一行'),
+          Text('我是第一行我是第一行我是第一行'),
         ],
       ),
     );
