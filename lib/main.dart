@@ -1,8 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_shop1/pages/home_page.dart';
-
-final searchList = ['1', '111', '121', '2', '222'];
-final recentSuggest = ['1', '2'];
 
 void main() {
   runApp(MaterialApp(
@@ -27,9 +23,12 @@ class _HomePageState extends State<HomePage> {
       appBar: new AppBar(
         title: new Text('搜索栏'),
         actions: <Widget>[
-          IconButton(icon: Icon(Icons.search), onPressed: () {
-            showSearch(context: context, delegate: HomePageSearchDelegate());
-          }),
+          IconButton(
+              icon: Icon(Icons.search),
+              onPressed: () {
+                showSearch(
+                    context: context, delegate: HomePageSearchDelegate());
+              }),
         ],
       ),
     );
@@ -60,22 +59,25 @@ class HomePageSearchDelegate extends SearchDelegate<String> {
   @override
   Widget buildSuggestions(BuildContext context) {
     final itemList = query.isEmpty
-        ? recentSuggest
-        : searchList.where((input) => input.startsWith(query)).toList();
+        ? ['1', '2']
+        : ['1', '111', '2', '222']
+            .where((input) => input.startsWith(query))
+            .toList();
     return ListView.builder(
         itemCount: itemList.length,
-        itemBuilder: (context, index) =>
-            ListTile(
+        itemBuilder: (context, index) => ListTile(
               title: RichText(
-                  text: TextSpan(
-                      text: itemList[index].substring(0, query.length),
-                      style: TextStyle(
-                          color: Colors.black, fontWeight: FontWeight.bold),
-                      children: [
-                        TextSpan(
-                            text: itemList[index].substring(query.length),
-                            style: TextStyle(color: Colors.grey))
-                      ])),
+                text: TextSpan(
+                  text: itemList[index].substring(0, query.length),
+                  style: TextStyle(
+                      color: Colors.black, fontWeight: FontWeight.bold),
+                  children: [
+                    TextSpan(
+                        text: itemList[index].substring(query.length),
+                        style: TextStyle(color: Colors.grey))
+                  ],
+                ),
+              ),
             ));
   }
 
