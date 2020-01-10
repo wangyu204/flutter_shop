@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 
 void main() {
@@ -13,93 +14,132 @@ void main() {
 
 class HomePage extends StatefulWidget {
   @override
-  _HomePageState createState() => new _HomePageState();
+  HomePageState createState() => new HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class HomePageState extends State<HomePage> {
+  List<Widget> list = [];
+
+
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
-      appBar: new AppBar(
-        title: new Text('搜索栏'),
-        actions: <Widget>[
-          IconButton(
-              icon: Icon(Icons.search),
-              onPressed: () {
-                showSearch(
-                    context: context, delegate: HomePageSearchDelegate());
-              }),
-        ],
+    final width = MediaQuery
+        .of(context)
+        .size
+        .width;
+    final height = MediaQuery
+        .of(context)
+        .size
+        .height;
+
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('wrap'),
+      ),
+      body: Center(
+        child: Container(
+          //宽度
+          width: width,
+          //高度
+          height: height / 2.0,
+          // 盒子样式
+          decoration: new BoxDecoration(
+            color: Colors.grey,
+            //设置Border属性给容器添加边框
+            border: new Border.all(
+              //为边框添加颜色
+              color: Colors.grey,
+              //边框宽度
+              width: 0,
+            ),
+          ),
+          child: Wrap(
+            children: list,
+            spacing: 8.0,
+          ),
+        ),
       ),
     );
   }
-}
 
-class HomePageSearchDelegate extends SearchDelegate<String> {
   @override
-  List<Widget> buildActions(BuildContext context) {
-    return [
-      IconButton(
-          icon: Icon(Icons.clear),
-          onPressed: () {
-            query = '';
-          }),
-    ];
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    list..add(_buildAddButton());
   }
 
   @override
-  Widget buildLeading(BuildContext context) {
-    return IconButton(
-        icon: Icon(Icons.arrow_back_ios),
-        onPressed: () {
-          close(context, null);
-        });
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
   }
 
   @override
-  Widget buildSuggestions(BuildContext context) {
-    final itemList = query.isEmpty
-        ? ['1', '2']
-        : ['1', '111', '2', '222']
-            .where((input) => input.startsWith(query))
-            .toList();
-    return ListView.builder(
-        itemCount: itemList.length,
-        itemBuilder: (context, index) => ListTile(
-              title: RichText(
-                text: TextSpan(
-                  text: itemList[index].substring(0, query.length),
-                  style: TextStyle(
-                      color: Colors.black, fontWeight: FontWeight.bold),
-                  children: [
-                    TextSpan(
-                        text: itemList[index].substring(query.length),
-                        style: TextStyle(color: Colors.grey))
-                  ],
-                ),
-              ),
-            ));
+  void didUpdateWidget(HomePage oldWidget) {
+    // TODO: implement didUpdateWidget
+    super.didUpdateWidget(oldWidget);
   }
 
   @override
-  Widget buildResults(BuildContext context) {
+  void didChangeDependencies() {
+    // TODO: implement didChangeDependencies
+    super.didChangeDependencies();
+  }
+
+  Widget _buildAddButton() {
+    return GestureDetector(
+      onTap: () {
+        if (list.length < 9) {
+          //一定要放在这里添加不然不生效
+          setState(() {
+            list.insert(list.length - 1, _buildPhoto());
+          });
+        }
+      },
+      child: Container(
+        //宽度
+        width: 80,
+        //高度
+        height: 80,
+        margin: EdgeInsets.all(8),
+        // 盒子样式
+        decoration: new BoxDecoration(
+          color: Colors.yellow,
+          //设置Border属性给容器添加边框
+          border: new Border.all(
+            //为边框添加颜色
+            color: Colors.yellow,
+            //边框宽度
+            width: 0,
+          ),
+        ),
+        child: Icon(Icons.add),
+      ),
+    );
+  }
+
+
+  Widget _buildPhoto() {
     return Container(
       //宽度
-      width: 100,
+      width: 80,
       //高度
-      height: 100,
+      height: 80,
+      margin: EdgeInsets.all(8),
+      alignment: Alignment.center,
       // 盒子样式
       decoration: new BoxDecoration(
-        color: Colors.green,
+        color: Colors.yellow,
         //设置Border属性给容器添加边框
         border: new Border.all(
           //为边框添加颜色
-          color: Colors.green,
+          color: Colors.yellow,
           //边框宽度
           width: 0,
         ),
       ),
-      child: Text('${query}'),
+      child: Text('text'),
     );
   }
 }
