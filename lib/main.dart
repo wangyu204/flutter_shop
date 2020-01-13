@@ -1,4 +1,7 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_shop1/pages/home_page.dart';
 
 void main() {
   runApp(MaterialApp(
@@ -17,23 +20,46 @@ class HomePage extends StatefulWidget {
 }
 
 class HomePageState extends State<HomePage> {
+  List<int> mList = List();
+  List<ExpandStateBean> modelList = List();
+
+  void _changeCurrentModelState(int index, bool flag) {
+    setState(() {
+      modelList.forEach((item) {
+        if (item.index == index) {
+          item.isOpen = !flag;
+        }
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('当个支持收缩的控件'),
+        title: Text('搜索栏'),
       ),
-      body: ExpansionTile(
-        title: Text('Expansion Tile'),
-        leading: Icon(Icons.ac_unit),
-        backgroundColor: Colors.white12,
-        children: <Widget>[
-          ListTile(
-            title: Text('list tile'),
-            subtitle: Text('subtitle'),
-          )
-        ],
-        initiallyExpanded: true,
+      body: SingleChildScrollView(
+        scrollDirection: Axis.vertical,
+        padding: EdgeInsets.all(0),
+        child: ExpansionPanelList(
+          expansionCallback: (index, flag) {
+            _changeCurrentModelState(index, flag);
+          },
+          children: mList.map((index) {
+            return ExpansionPanel(
+              headerBuilder: (ctx, flag) {
+                return ListTile(
+                  title: Text('This is No.${index}'),
+                );
+              },
+              body: ListTile(
+                title: Text('expansion No.${index}'),
+              ),
+              isExpanded: modelList[index].isOpen,
+            );
+          }).toList(),
+        ),
       ),
     );
   }
@@ -42,6 +68,10 @@ class HomePageState extends State<HomePage> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    for (var i = 0; i < 10; ++i) {
+      mList.add(i);
+      modelList.add(ExpandStateBean(i, false));
+    }
   }
 
   @override
@@ -61,4 +91,11 @@ class HomePageState extends State<HomePage> {
     // TODO: implement didChangeDependencies
     super.didChangeDependencies();
   }
+}
+
+class ExpandStateBean {
+  var isOpen;
+  var index;
+
+  ExpandStateBean(this.index, this.isOpen);
 }
