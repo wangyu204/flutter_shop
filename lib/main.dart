@@ -16,58 +16,59 @@ void main() {
 
 class HomePage extends StatefulWidget {
   @override
-  _HomePageState createState() => _HomePageState();
+  HomePageState createState() => new HomePageState();
 }
 
-class _HomePageState extends State<HomePage>
-    with SingleTickerProviderStateMixin {
-  AnimationController _controller;
-  Animation _animation;
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = AnimationController(
-      vsync: this,
-      duration: Duration(milliseconds: 3000),
-    );
-
-    _animation = Tween(begin: 0.0, end: 1.0).animate(_controller);
-    _animation.addStatusListener((status) {
-      if (status == AnimationStatus.completed) {
-        Navigator.of(context).pushAndRemoveUntil(
-            MaterialPageRoute(builder: (context) => SecondPage()),
-            (route) => route == null);
-      }
-    });
-    //播放动画
-    _controller.forward();
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Image.network(
-      //图片url
-      'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1546851657199&di=fdd278c2029f7826790191d59279dbbe&imgtype=0&src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F0112cb554438090000019ae93094f1.jpg%401280w_1l_2o_100sh.jpg',
-      //填充模式
-      fit: BoxFit.fill,
-    );
-  }
-}
-
-class SecondPage extends StatelessWidget {
+class HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('second'),
+        title: Text('tooltip'),
+      ),
+      body: Container(
+        //子元素对齐方式 上左
+        alignment: Alignment.center,
+        // 盒子样式
+        decoration: new BoxDecoration(
+          color: Colors.white,
+          //设置Border属性给容器添加边框
+          border: new Border.all(
+            //为边框添加颜色
+            color: Colors.white,
+            //边框宽度
+            width: 0,
+          ),
+        ),
+        child: Tooltip(
+          message: '我是提示',
+          child: Icon(Icons.all_inclusive),
+        ),
       ),
     );
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+  }
+
+  @override
+  void didUpdateWidget(HomePage oldWidget) {
+    // TODO: implement didUpdateWidget
+    super.didUpdateWidget(oldWidget);
+  }
+
+  @override
+  void didChangeDependencies() {
+    // TODO: implement didChangeDependencies
+    super.didChangeDependencies();
   }
 }
