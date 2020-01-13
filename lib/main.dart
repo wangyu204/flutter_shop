@@ -95,7 +95,7 @@ class DraggleWidget extends StatefulWidget {
 }
 
 class DraggleWidgetState extends State<DraggleWidget> {
-  Offset offset;
+  Offset offset = Offset(0, 0);
   Size size;
 
   @override
@@ -144,7 +144,9 @@ class DraggleWidgetState extends State<DraggleWidget> {
           ),
         ),
         onDraggableCanceled: (Velocity velocity, Offset offset) {
-          this.offset = offset;
+          setState(() {
+            this.offset = offset;
+          });
         },
       ),
     );
