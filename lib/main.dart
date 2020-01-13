@@ -16,86 +16,58 @@ void main() {
 
 class HomePage extends StatefulWidget {
   @override
-  HomePageState createState() => new HomePageState();
+  _HomePageState createState() => _HomePageState();
 }
 
-class HomePageState extends State<HomePage> {
-  List<int> mList = List();
-  List<ExpandStateBean> modelList = List();
-
-  void _changeCurrentModelState(int index, bool flag) {
-    setState(() {
-      modelList.forEach((item) {
-        if (item.index == index) {
-          item.isOpen = !flag;
-        }
-      });
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('搜索栏'),
-      ),
-      body: SingleChildScrollView(
-        scrollDirection: Axis.vertical,
-        padding: EdgeInsets.all(0),
-        child: ExpansionPanelList(
-          expansionCallback: (index, flag) {
-            _changeCurrentModelState(index, flag);
-          },
-          children: mList.map((index) {
-            return ExpansionPanel(
-              headerBuilder: (ctx, flag) {
-                return ListTile(
-                  title: Text('This is No.${index}'),
-                );
-              },
-              body: ListTile(
-                title: Text('expansion No.${index}'),
-              ),
-              isExpanded: modelList[index].isOpen,
-            );
-          }).toList(),
-        ),
-      ),
-    );
-  }
+class _HomePageState extends State<HomePage>
+    with SingleTickerProviderStateMixin {
+  AnimationController _controller;
+  Animation _animation;
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    for (var i = 0; i < 10; ++i) {
-      mList.add(i);
-      modelList.add(ExpandStateBean(i, false));
-    }
+    _controller = AnimationController(
+      vsync: this,
+      duration: Duration(milliseconds: 3000),
+    );
+
+    _animation = Tween(begin: 0.0, end: 1.0).animate(_controller);
+    _animation.addStatusListener((status) {
+      if (status == AnimationStatus.completed) {
+        Navigator.of(context).pushAndRemoveUntil(
+            MaterialPageRoute(builder: (context) => SecondPage()),
+            (route) => route == null);
+      }
+    });
+    //播放动画
+    _controller.forward();
   }
 
   @override
   void dispose() {
-    // TODO: implement dispose
+    _controller.dispose();
     super.dispose();
   }
 
   @override
-  void didUpdateWidget(HomePage oldWidget) {
-    // TODO: implement didUpdateWidget
-    super.didUpdateWidget(oldWidget);
-  }
-
-  @override
-  void didChangeDependencies() {
-    // TODO: implement didChangeDependencies
-    super.didChangeDependencies();
+  Widget build(BuildContext context) {
+    return Image.network(
+      //图片url
+      'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1546851657199&di=fdd278c2029f7826790191d59279dbbe&imgtype=0&src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F0112cb554438090000019ae93094f1.jpg%401280w_1l_2o_100sh.jpg',
+      //填充模式
+      fit: BoxFit.fill,
+    );
   }
 }
 
-class ExpandStateBean {
-  var isOpen;
-  var index;
-
-  ExpandStateBean(this.index, this.isOpen);
+class SecondPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('second'),
+      ),
+    );
+  }
 }
